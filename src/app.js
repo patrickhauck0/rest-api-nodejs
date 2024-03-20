@@ -1,6 +1,6 @@
 import express from "express";
 import conectaNaDatabase from "./config/dbConnect.js";
-import livro from "./models/Livro.js";
+import routes from "./routes/index.js";
 
 const conexao = await conectaNaDatabase();
 
@@ -13,8 +13,10 @@ conexao.once("open", () => {
 })
 
 const app = express();
+routes(app);
+
 //Middleware > alterar req e res e converter para json
-app.use(express.json());
+/* app.use(express.json()); */
 
 /* const livros = [
     {
@@ -33,16 +35,17 @@ app.use(express.json());
     })
 } */
 
-app.get("/", (req, res) => {
+/* app.get("/", (req, res) => {
     res.status(200).send("Curso de Node.js");
-});
+}); */
 
-app.get("/livros", async (req, res) => {
+//Deletar o app gets, já que passamos para o controller e routes.
+/* app.get("/livros", async (req, res) => {
     const listaLivros = await livro.find({});
     res.status(200).json(listaLivros);
-})
+}) */
 
-app.get("/livros/:id", (req, res) => {
+/* app.get("/livros/:id", (req, res) => {
     const index = buscaLivro(req.params.id);
     res.status(200).json(livros[index]);
 })
@@ -56,7 +59,7 @@ app.put("/livros/:id", (req, res) => {
     const index = buscaLivro(req.params.id);
     livros[index].titulo = req.body.titulo;
     res.status(200).json(livros);
-})
+}) */
 
 app.delete("/livros/:id", (req, res) => {
     const index = buscaLivro(req.params.id);
